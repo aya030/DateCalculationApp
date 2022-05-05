@@ -1,0 +1,262 @@
+/*---------------------------------
+  base(共通)
+---------------------------------*/
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+	border-top: 15px solid #34675c;
+}
+
+h1 {
+	margin: 40px 0;
+    padding-left: 10px;
+	color: #333;
+	font-size: 24px;
+	font-weight: normal;
+	border-left: 4px dotted #6D7993;
+}
+
+a {
+	text-decoration: none;
+}
+
+/*---------------------------------
+  table(共通)
+---------------------------------*/
+table {
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table th {
+    padding: 0 30px;
+    height: 40px;
+    font-weight: normal;
+    border: 1px solid #ddd;
+}
+
+table td {
+    padding: 0 30px;
+    height: 70px;
+    font-weight: normal;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #F2F2F2;
+}
+
+/*---------------------------------
+  l-main(共通)
+---------------------------------*/
+.l-main {
+	margin: 0 auto;
+	max-width: 900px;
+}
+
+/*---------------------------------
+  p-index(index.html)
+---------------------------------*/
+.p-index__caption {
+	padding: 0 5px;
+	margin-bottom: 5px;
+    border-left: 4px solid #34675c;
+}
+.p-index-text {
+	display: flex;
+	padding-bottom: 5px;
+	margin-bottom: 40px;
+	width: 340px;
+	font-size: 16px;
+	border-bottom: 4px dotted #34675c;
+}
+
+.p-index-table__wrapper {
+    display: flex;
+	align-items: start;
+	max-width: 900px;
+}
+
+/*---------------------------------
+  p-edit(edit.html)
+---------------------------------*/
+.p-edit__form {
+	padding: 10px 40px 40px;
+	width: 900px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+}
+.p-edit__input-wrapper {
+	position: relative;
+}
+
+/*---------------------------------
+  p-new(new.html)
+---------------------------------*/
+.p-new__form {
+    padding: 10px 40px 40px;
+	width: 900px;
+    box-shadow: 0px 3px 6px rgba(52, 103, 92, 0.16);
+}
+.p-new__input-wrapper {
+	position: relative;
+}
+
+/*---------------------------------
+  input
+---------------------------------*/
+.c-input__date {
+    margin-bottom: 40px;
+	width: 240px;
+	height: 34px;
+}
+
+.c-input__button-execution {
+	padding: 0 20px;
+	height: 34px;
+	color: #fff;
+	background-color: #34675c;
+	border: 0 none;
+	border-radius: 3px;
+}
+
+.c-input__button-execution:hover {
+	opacity: 0.8;
+}
+
+.c-input__label {
+	display: block;
+	padding: 0 5px;
+	margin: 40px 0 5px;
+	width: 160px;
+	height: 20px;
+	line-height: 20px;
+	color: #333;
+	text-align: left;
+	font-size: 14px;
+	border-left: 4px solid #34675c;
+}
+
+.c-input__text {
+	display: block;
+    padding-left: 10px;
+	width: 100%;
+	height: 30px;
+}
+
+/*---------------------------------
+  button
+---------------------------------*/
+.c-button__new {
+	display: block;
+    margin-bottom: 10px;
+    width: 140px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 14px;
+	color: #fff;
+	background-color: #34675c;
+	text-align: center;
+	border: 0 none;
+	border-radius: 3px;
+}
+
+.c-button__new:hover {
+	opacity: 0.8;
+}
+
+.c-button__edit {
+	padding: 5px 20px;
+	margin-top: 5px;
+	font-size: 14px;
+	color: #fff;
+	background-color: #34675c;
+	border: 0 none;
+}
+
+.c-button__edit:hover {
+	opacity: 0.8;
+}
+
+.c-button__delete {
+	padding: 5px 20px;
+	font-size: 14px;
+	color: #34675c;
+	background-color: #FFF;
+	border: 0 none;
+}
+
+.c-button__delete:hover {
+	opacity: 0.8;
+}
+
+.c-button__registrationedit {
+	display: block;
+	padding: 0 20px;
+	margin-top: 40px;
+	width: 140px;
+	height: 40px;
+	font-size: 14px;
+	color: #fff;
+	background-color: #34675c;
+	border: 0 none;
+	border-radius: 3px;
+}
+
+.c-button__registrationedit:hover {
+	opacity: 0.8;
+}
+
+.c-button__register {
+	display: block;
+	padding: 0 20px;
+	margin-top: 40px;
+	width: 140px;
+	height: 40px;
+	font-size: 14px;
+	color: #fff;
+	background-color: #34675c;
+	border: 0 none;
+	border-radius: 3px;
+}
+
+.c-button__register:hover {
+	opacity: 0.8;
+}
+
+.c-button__back {
+	display: block;
+	margin-top: 20px;
+	margin-left: auto;
+	width: 140px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 14px;
+	color: #34675c;
+	background-color: #fff;
+	border: 1px solid #34675c; ;
+	border-radius: 3px;
+}
+
+.c-button__back:hover {
+	opacity: 0.8;
+}
+
+/*---------------------------------
+  error
+---------------------------------*/
+.c-span__error {
+	position: absolute;
+	bottom: -23px;
+	left: 0;
+	font-size: 14px;
+	color: red;
+}
+.c-span__error:before {
+	content:"*";
+	padding-right: 3px;
+}

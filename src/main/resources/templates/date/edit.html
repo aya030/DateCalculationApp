@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="${title}">title</title>
+	<link href="/css/style.css" rel="stylesheet">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<main class="l-main">
+		<h1>登録変更</h1>
+
+		<form class="p-edit__form" th:method="post" th:object=${dateCalc} th:action="@{/datecalc/edit/id={id}(id=*{id})}">
+			<div class="p-edit__input-wrapper">
+				<label class="c-input__label" for="dateid">日付ID</label>
+				<input class="c-input__text" id="dateid" type="text" th:field="*{dateid}">
+				<span class="c-span__error" th:errors="*{dateid}"></span>
+			</div>
+			<div class="p-edit__input-wrapper">
+				<label class="c-input__label" for="name">日付名</label>
+				<input class="c-input__text" id="name" type="text" th:field="*{name}">
+				<span class="c-span__error" th:errors="*{name}"></span>
+			</div>
+			<div class="p-edit__input-wrapper">
+				<label class="c-input__label" for="year">年</label>
+				<input class="c-input__text" id="year" type="text" th:field="*{plusyear}">
+				<span class="c-span__error" th:errors="*{plusyear}"></span>
+			</div>
+			<div class="p-edit__input-wrapper">
+				<label class="c-input__label" for="month">月</label>
+				<input class="c-input__text" id="month" type="text" th:field="*{plusmonth}">
+				<span class="c-span__error" th:errors="*{plusmonth}"></span>
+			</div>
+			<div class="p-edit__input-wrapper">
+				<label class="c-input__label" for="day">日</label>
+				<input class="c-input__text" id="day" type="text" th:field="*{plusday}">
+				<span class="c-span__error" th:errors="*{plusday}"></span>
+			</div>
+
+			<button class="c-button__registrationedit">登録変更</button>
+		</form>
+		<a href="/datecalc/index" class="c-button__back">一覧画面に戻る</a>
+	</main>
+</body>
+
+</html>

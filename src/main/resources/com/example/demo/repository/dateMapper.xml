@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.repository.DateMapper">
+	<select id="findById" resultType="com.example.demo.entity.DateCalc">
+        SELECT
+            id,
+            dateid,
+            name,
+            plusyear,
+            plusmonth,
+            plusday
+         FROM
+            DateTable
+         WHERE
+            id = #{id}
+    </select>
+	<select id="findAll" resultType="com.example.demo.entity.DateCalc">
+        SELECT
+            id,
+            dateid,
+            name,
+            plusyear,
+            plusmonth,
+            plusday
+         FROM
+            DateTable
+    </select>
+	<insert id="insertOne">
+     INSERT into DateTable (
+            id,
+            dateid,
+            name,
+            plusyear,
+            plusmonth,
+            plusday
+      ) 
+      VALUES (
+           #{id},
+           #{dateid},
+           #{name}, 
+           #{plusyear}, 
+           #{plusmonth},
+           #{plusday}
+      )
+    </insert>
+	<update id="updateOne">
+     UPDATE  DateTable
+     SET   id = #{id},
+           dateid = #{dateid},
+           name = #{name}, 
+           plusyear = #{plusyear}, 
+           plusmonth = #{plusmonth},
+           plusday = #{plusday}
+     WHERE   id = #{id}
+    </update>
+    <delete id="deleteOne">
+     DELETE FROM
+        DateTable 
+    WHERE
+        id = #{id}  
+    </delete>
+
+
+</mapper>

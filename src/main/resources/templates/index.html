@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="${title}">title</title>
+	<link href="/css/style.css" rel="stylesheet">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<main class="l-main">
+		<h1>日付計算APP</h1>
+
+		<p class="p-index__caption">日付を入力してください</p>
+		<form th:action="@{/datecalc/calc}" method="GET">
+			<input class="c-input__date" type="date" id="inputDate" name="dateinput"></input>
+			<input class="c-input__button-execution" type="submit" value="計算実行" />
+		</form>
+
+		<div class="p-index-text">
+			<p>入力した値：</p>
+			<p th:text="${dateinput}">2022/02/02</p>
+		</div>
+
+		<a href="/datecalc/new" class="c-button__new">新規登録</a>
+
+		<div th:if="${dateList} !=null">
+			<div class="p-index-table__wrapper">
+				<table>
+					<tr>
+						<th>ID</th>
+						<th>日付ID</th>
+						<th>日付名</th>
+						<th>年</th>
+						<th>月</th>
+						<th>日</th>
+						<th>編集</th>
+					</tr>
+					<tr th:each="date:${dateList}" th:object="${date}">
+						<td th:text="*{id}">id</td>
+						<td th:text="*{dateid}">日付ID</td>
+						<td th:text="*{name}">日付名</td>
+						<td th:text="*{plusyear}">年</td>
+						<td th:text="*{plusmonth}">月</td>
+						<td th:text="*{plusday}">日</td>
+						<td class="c-table__editbutton">
+							<a th:href="@{/datecalc/edit/id={id}(id=*{id})}"><button
+									class="c-button__edit">変更</button></a>
+							<form th:method="post" th:action="@{/datecalc/delete/id={id}(id=*{id})}">
+								<button class="c-button__delete">削除</button>
+							</form>
+						</td>
+					</tr>
+				</table>
+				
+				<table>
+					<tr>
+						<th>計算結果</th>
+					</tr>
+					<tr th:each="resultDate:${stringDate}" th:object="${resultDate}">
+						<td th:text="${resultDate}">id</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>
