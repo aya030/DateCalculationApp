@@ -18,19 +18,19 @@ public class DateService {
 	public DateService(DateMapper dateMapper) {
 		this.dateMapper = dateMapper;
 	}
-	
+
 	// 全件取得
 	public List<DateCalc> getDateList() {
 		return dateMapper.findAll();
 	}
-	
-	//1件取得
+
+	// 1件取得
 	public DateCalc findById(Integer id) {
 		DateCalc dateCalc = new DateCalc();
 		dateCalc.setId(id);
 		return dateMapper.findById(dateCalc);
 	}
-	
+
 	// 新規登録
 	public void insertOne(@Validated DateCalc dateCalc) {
 		dateMapper.insertOne(dateCalc);
@@ -45,18 +45,19 @@ public class DateService {
 	public void deleteOne(int id) {
 		dateMapper.deleteOne(id);
 	}
-	
+
 	// 計算
 	public List<String> dataCalc(String inputDate) {
 		List<String> dateCalcResultList = new ArrayList<String>();
 		String stringDate = "yyyy/MM/dd";
 		LocalDate localDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		List<DateCalc> dateCalcs = dateMapper.findAll();
-		
+
 		for (DateCalc date : dateCalcs) {
-		LocalDate dateCalc = localDate.plusYears(date.getPlusyear()).plusMonths(date.getPlusmonth()).plusDays(date.getPlusday());
-		stringDate = dateCalc.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-		dateCalcResultList.add(stringDate);
+			LocalDate dateCalc = localDate.plusYears(date.getPlusyear()).plusMonths(date.getPlusmonth())
+					.plusDays(date.getPlusday());
+			stringDate = dateCalc.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+			dateCalcResultList.add(stringDate);
 		}
 		return dateCalcResultList;
 	}
