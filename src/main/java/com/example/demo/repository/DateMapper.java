@@ -14,7 +14,7 @@ public interface DateMapper {
 		public List<DateCalc> findAll();
 		
 		//1件取得
-		public DateCalc findById(DateCalc dateCalc);
+		public DateCalc findById(int id);
 
 		// 登録
 		public void insertOne(DateCalc date);

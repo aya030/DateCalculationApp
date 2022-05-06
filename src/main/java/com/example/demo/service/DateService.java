@@ -25,10 +25,8 @@ public class DateService {
 	}
 
 	// 1件取得
-	public DateCalc findById(Integer id) {
-		DateCalc dateCalc = new DateCalc();
-		dateCalc.setId(id);
-		return dateMapper.findById(dateCalc);
+	public DateCalc findById(int id) {
+		return dateMapper.findById(id);
 	}
 
 	// 新規登録
