@@ -49,11 +49,11 @@ public class DateService {
 	// 計算
 	public List<String> dataCalc(String inputDate) {
 		List<String> dateCalcResultList = new ArrayList<String>();
-		String stringDate = "yyyy/MM/dd";
 		LocalDate localDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		List<DateCalc> dateCalcs = dateMapper.findAll();
 
 		for (DateCalc date : dateCalcs) {
+			String stringDate = "yyyy/MM/dd";
 			LocalDate dateCalc = localDate.plusYears(date.getPlusyear()).plusMonths(date.getPlusmonth())
 					.plusDays(date.getPlusday());
 			stringDate = dateCalc.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
