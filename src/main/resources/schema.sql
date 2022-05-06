@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS DateTable (
     plusyear INT(50) NOT NULL,
     plusmonth INT(50) NOT NULL,
     plusday INT(50) NOT NULL
-    );
+);
 
