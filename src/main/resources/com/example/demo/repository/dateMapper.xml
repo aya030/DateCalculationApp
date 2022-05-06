@@ -43,8 +43,7 @@
     </insert>
 	<update id="updateOne">
      UPDATE  DateTable
-     SET   id = #{id},
-           dateid = #{dateid},
+     SET   dateid = #{dateid},
            name = #{name}, 
            plusyear = #{plusyear}, 
            plusmonth = #{plusmonth},
