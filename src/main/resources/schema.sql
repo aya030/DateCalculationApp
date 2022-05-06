@@ -1,11 +1,10 @@
-DROP TABLE IF EXISTS DateTable;
+DROP TABLE IF EXISTS calculation_dates;
 
-CREATE TABLE IF NOT EXISTS DateTable (
+CREATE TABLE IF NOT EXISTS calculation_dates (
     id INT(50) PRIMARY KEY AUTO_INCREMENT,
-    dateid VARCHAR(50) NOT NULL,
+    date_id VARCHAR(50) NOT NULL,
     name VARCHAR(50) NOT NULL,
-    plusyear INT(50) NOT NULL,
-    plusmonth INT(50) NOT NULL,
-    plusday INT(50) NOT NULL
+    plus_year INT(50) NOT NULL,
+    plus_month INT(50) NOT NULL,
+    plus_day INT(50) NOT NULL
 );
-

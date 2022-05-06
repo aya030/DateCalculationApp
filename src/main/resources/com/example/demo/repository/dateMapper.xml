@@ -4,34 +4,34 @@
 	<select id="findById" resultType="com.example.demo.entity.DateCalc">
         SELECT
             id,
-            dateid,
+            date_id,
             name,
-            plusyear,
-            plusmonth,
-            plusday
+            plus_year,
+            plus_month,
+            plus_day
          FROM
-            DateTable
+            calculation_dates
          WHERE
             id = #{id}
     </select>
 	<select id="findAll" resultType="com.example.demo.entity.DateCalc">
         SELECT
             id,
-            dateid,
+            date_id,
             name,
-            plusyear,
-            plusmonth,
-            plusday
+            plus_year,
+            plus_month,
+            plus_day
          FROM
-            DateTable
+            calculation_dates
     </select>
 	<insert id="insertOne">
-     INSERT into DateTable (
-            dateid,
+     INSERT into calculation_dates (
+            date_id,
             name,
-            plusyear,
-            plusmonth,
-            plusday
+            plus_year,
+            plus_month,
+            plus_day
       ) 
       VALUES (
            #{dateid},
@@ -42,16 +42,16 @@
       )
     </insert>
 	<update id="updateOne">
-     UPDATE  DateTable
-     SET   dateid = #{dateid},
+     UPDATE  calculation_dates
+     SET   date_id = #{dateid},
            name = #{name}, 
-           plusyear = #{plusyear}, 
-           plusmonth = #{plusmonth},
-           plusday = #{plusday}
+           plus_year = #{plusyear}, 
+           plus_month = #{plusmonth},
+           plus_day = #{plusday}
      WHERE   id = #{id}
     </update>
 	<delete id="deleteOne">
-     DELETE  FROM  DateTable
+     DELETE  FROM  calculation_dates
      WHERE   id = #{id}  
     </delete>
 </mapper>
