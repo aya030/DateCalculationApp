@@ -50,12 +50,8 @@
            plusday = #{plusday}
      WHERE   id = #{id}
     </update>
-    <delete id="deleteOne">
-     DELETE FROM
-        DateTable 
-    WHERE
-        id = #{id}  
+	<delete id="deleteOne">
+     DELETE  FROM  DateTable
+     WHERE   id = #{id}  
     </delete>
-
-
 </mapper>
