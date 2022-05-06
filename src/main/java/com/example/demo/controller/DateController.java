@@ -106,7 +106,7 @@ public class DateController {
 
 		dateService.updateOne(dateCalc.getId(), dateCalc.getDateid(), dateCalc.getName(), dateCalc.getPlusyear(),
 				dateCalc.getPlusmonth(), dateCalc.getPlusday());
-		return "redirect:/datecalc/index";
+		return "date/edit";
 	}
 
 	/* 削除 */
@@ -123,11 +123,9 @@ public class DateController {
 	/* 変更・削除ボタンのIDがない時 */
 	@ExceptionHandler(NumberFormatException.class)
 	public String NumberFormatExceptionHandler(Model model) {
-		model.addAttribute("status", "400エラー");
-		model.addAttribute("error", "NumberFormatException");
-		model.addAttribute("message", "IDが不正です");
-
-		return "error";
+        //status -> 400エラー
+		//error -> NumberFormatException
+		return "redirect:/datecalc/index";
 	}
 
 }
