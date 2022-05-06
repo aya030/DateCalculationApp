@@ -47,17 +47,15 @@ public class DateService {
 	}
 
 	// 計算
-	public List<String> calculationDate(String inputDate) {
-		List<String> dateCalcResultList = new ArrayList<String>();
+	public List<LocalDate> calculationDate(String inputDate) {
+		List<LocalDate> dateCalcResultList = new ArrayList<LocalDate>();
 		LocalDate selectedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		List<DateCalc> dateCalcs = dateMapper.findAll();
 
 		for (DateCalc date : dateCalcs) {
-			String stringDate = "yyyy/MM/dd";
 			LocalDate calculationDate = selectedDate.plusYears(date.getPlusyear()).plusMonths(date.getPlusmonth())
 					.plusDays(date.getPlusday());
-			stringDate = calculationDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-			dateCalcResultList.add(stringDate);
+			dateCalcResultList.add(calculationDate);
 		}
 		return dateCalcResultList;
 	}

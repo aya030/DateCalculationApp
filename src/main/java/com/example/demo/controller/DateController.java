@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -44,11 +47,17 @@ public class DateController {
 		List<DateCalc> dateList = dateService.getDateList();
 		model.addAttribute("dateList", dateList);
 
-		String standardDate = inputDate.replace('-', '/');
-		model.addAttribute("dateinput", standardDate);
+		String selectedDate = inputDate.replace('-', '/');
+		model.addAttribute("dateinput", selectedDate);
 
-		List<String> stringDate = dateService.calculationDate(inputDate);
-		model.addAttribute("stringDate", stringDate);
+		List<LocalDate> dateCalcResultList = dateService.calculationDate(inputDate);
+		List<String> dateCalcResultStrList = new ArrayList<String>();
+		for (LocalDate dateCalcResult : dateCalcResultList) {
+			/*localData型をString型に変換*/
+			String stringDate = dateCalcResult.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+			dateCalcResultStrList.add(stringDate);
+		}
+		model.addAttribute("stringDate", dateCalcResultStrList);
 
 		return "index";
 	}
@@ -68,7 +77,7 @@ public class DateController {
 
 	@PostMapping("/new")
 	public String create(Model model, @Validated @ModelAttribute DateCalc dateCalc, BindingResult result) {
-		
+
 		if (result.hasErrors()) {
 
 			/* plusyear,plusmonth,plusdateの初期値 */
