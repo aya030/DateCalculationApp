@@ -10,24 +10,20 @@ import com.example.demo.entity.DateCalc;
 @Mapper
 public interface DateMapper {
 
-	    //全件取得
-		public List<DateCalc> findAll();
-		
-		//1件取得
-		public DateCalc findById(int id);
+	// 全件取得
+	public List<DateCalc> findAll();
 
-		// 登録
-		public void insertOne(DateCalc date);
+	// 1件取得
+	public DateCalc findById(int id);
 
-		// 更新
-		public void updateOne(@Param("id") int id, @Param("dateid") String dateid,@Param("name") String name, @Param("plusyear") int plusyear,
-				@Param("plusmonth") int plusmonth, @Param("plusday") int plusday);
+	// 登録
+	public void insertOne(DateCalc date);
 
-		// 削除
-		public Integer deleteOne(int id);
+	// 更新
+	public void updateOne(@Param("id") int id, @Param("dateid") String dateid, @Param("name") String name,
+			@Param("plusyear") int plusyear, @Param("plusmonth") int plusmonth, @Param("plusday") int plusday);
 
-		//計算
-		public void getCalc(int plusyear, int plusmonth, int plusday);
-		
+	// 削除
+	public Integer deleteOne(int id);
+
 }
-
