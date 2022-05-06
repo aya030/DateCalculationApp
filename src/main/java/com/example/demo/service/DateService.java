@@ -47,7 +47,7 @@ public class DateService {
 	}
 
 	// 計算
-	public List<String> dataCalc(String inputDate) {
+	public List<String> calculationDate(String inputDate) {
 		List<String> dateCalcResultList = new ArrayList<String>();
 		LocalDate selectedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		List<DateCalc> dateCalcs = dateMapper.findAll();

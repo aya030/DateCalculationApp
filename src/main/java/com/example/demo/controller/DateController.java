@@ -47,7 +47,7 @@ public class DateController {
 		String standardDate = inputDate.replace('-', '/');
 		model.addAttribute("dateinput", standardDate);
 
-		List<String> stringDate = dateService.dataCalc(inputDate);
+		List<String> stringDate = dateService.calculationDate(inputDate);
 		model.addAttribute("stringDate", stringDate);
 
 		return "index";
