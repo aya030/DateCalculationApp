@@ -8,3 +8,4 @@ CREATE TABLE IF NOT EXISTS calculation_dates (
     plus_month INT(50) NOT NULL,
     plus_day INT(50) NOT NULL
 );
+
