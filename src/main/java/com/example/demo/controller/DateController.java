@@ -53,7 +53,7 @@ public class DateController {
 		List<LocalDate> dateCalcResultList = dateService.calculationDate(inputDate);
 		List<String> dateCalcResultStrList = new ArrayList<String>();
 		for (LocalDate dateCalcResult : dateCalcResultList) {
-			/*localData型をString型に変換*/
+			/* localData型をString型に変換 */
 			String stringDate = dateCalcResult.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 			dateCalcResultStrList.add(stringDate);
 		}
@@ -99,7 +99,8 @@ public class DateController {
 	}
 
 	@PostMapping("/edit/id={id}")
-	public String update(Model model, @Validated @ModelAttribute DateCalc dateCalc, BindingResult result) {
+	public String update(Model model, @PathVariable("id") int id, @Validated @ModelAttribute DateCalc dateCalc,
+			BindingResult result) {
 		if (result.hasErrors()) {
 			return "date/edit";
 		}
@@ -123,8 +124,8 @@ public class DateController {
 	/* 変更・削除ボタンのIDがない時 */
 	@ExceptionHandler(NumberFormatException.class)
 	public String NumberFormatExceptionHandler(Model model) {
-        //status -> 400エラー
-		//error -> NumberFormatException
+		// status -> 400エラー
+		// error -> NumberFormatException
 		return "redirect:/datecalc/index";
 	}
 
