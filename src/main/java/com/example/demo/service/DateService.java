@@ -54,9 +54,9 @@ public class DateService {
 
 		for (DateCalc date : dateCalcs) {
 			String stringDate = "yyyy/MM/dd";
-			LocalDate dateCalc = selectedDate.plusYears(date.getPlusyear()).plusMonths(date.getPlusmonth())
+			LocalDate calculationDate = selectedDate.plusYears(date.getPlusyear()).plusMonths(date.getPlusmonth())
 					.plusDays(date.getPlusday());
-			stringDate = dateCalc.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+			stringDate = calculationDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 			dateCalcResultList.add(stringDate);
 		}
 		return dateCalcResultList;
