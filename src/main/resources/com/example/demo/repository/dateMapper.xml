@@ -27,7 +27,6 @@
     </select>
 	<insert id="insertOne">
      INSERT into DateTable (
-            id,
             dateid,
             name,
             plusyear,
@@ -35,7 +34,6 @@
             plusday
       ) 
       VALUES (
-           #{id},
            #{dateid},
            #{name}, 
            #{plusyear}, 
