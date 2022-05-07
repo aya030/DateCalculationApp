@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,7 +15,7 @@ public interface DateMapper {
 	public List<DateCalc> findAll();
 
 	// 1件取得
-	public DateCalc findById(int id);
+	public Optional<DateCalc> findById(int id);
 
 	// 登録
 	public void insertOne(DateCalc date);

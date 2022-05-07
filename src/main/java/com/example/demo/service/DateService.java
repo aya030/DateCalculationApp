@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +26,7 @@ public class DateService {
 	}
 
 	// 1件取得
-	public DateCalc findById(int id) {
+	public Optional<DateCalc> findById(int id) {
 		return dateMapper.findById(id);
 	}
 
