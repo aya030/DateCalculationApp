@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -93,9 +94,14 @@ public class DateController {
 	/* 更新 */
 	@GetMapping("/edit/id={id}")
 	public String edit(@PathVariable("id") int id, Model model) {
-
-		model.addAttribute("dateCalc", dateService.findById(id));
-		return "date/edit";
+		Optional<DateCalc> dateCalcSearch = dateService.findById(id);
+		if (dateCalcSearch.isPresent()) {
+			DateCalc dateCalc = dateCalcSearch.get();
+			model.addAttribute("dateCalc", dateCalc);
+			return "date/edit";
+		} else {
+			return "error";
+		}
 	}
 
 	@PostMapping("/edit/id={id}")
@@ -107,7 +113,7 @@ public class DateController {
 
 		dateService.updateOne(dateCalc.getId(), dateCalc.getDateid(), dateCalc.getName(), dateCalc.getPlusyear(),
 				dateCalc.getPlusmonth(), dateCalc.getPlusday());
-		return "date/edit";
+		return "redirect:/datecalc/index";
 	}
 
 	/* 削除 */
