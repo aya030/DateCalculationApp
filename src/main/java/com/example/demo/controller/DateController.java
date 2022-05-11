@@ -111,7 +111,7 @@ public class DateController {
 			return "date/edit";
 		}
 
-		dateService.updateOne(dateCalc.getId(), dateCalc.getDateid(), dateCalc.getName(), dateCalc.getPlusyear(),
+		dateService.updateOne(id, dateCalc.getDateid(), dateCalc.getName(), dateCalc.getPlusyear(),
 				dateCalc.getPlusmonth(), dateCalc.getPlusday());
 		return "redirect:/datecalc/index";
 	}
