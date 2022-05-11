@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.example.demo.entity.DateCalc;
+import com.example.demo.form.DateForm;
 
 @Mapper
 public interface DateMapper {
@@ -18,7 +19,7 @@ public interface DateMapper {
 	public Optional<DateCalc> findById(int id);
 
 	// 登録
-	public void insertOne(DateCalc date);
+	public void insertOne(DateForm dateForm);
 
 	// 更新
 	public void updateOne(@Param("id") int id, @Param("dateid") String dateid, @Param("name") String name,

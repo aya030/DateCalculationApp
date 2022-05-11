@@ -10,7 +10,7 @@
 <body>
 	<main class="l-main">
 		<h1>新規登録</h1>
-		<form class="p-new__form" th:method="post" th:object=${dateCalc} th:action="@{/datecalc/new}">
+		<form class="p-new__form" th:method="post" th:object=${dateForm} th:action="@{/datecalc/new}">
 			<div class="p-new__input-wrapper">
 				<label class="c-input__label" for="dateid">日付ID</label>
 				<input class="c-input__text" id="dateid" type="text" th:field="*{dateid}">

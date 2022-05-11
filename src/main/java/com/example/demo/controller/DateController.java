@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.DateCalc;
+import com.example.demo.form.DateForm;
 import com.example.demo.service.DateService;
 
 @Controller
@@ -64,9 +65,9 @@ public class DateController {
 
 	/* 新規登録 */
 	@GetMapping("/new")
-	public String newDate(Model model, @ModelAttribute DateCalc dateCalc) {
+	public String newDate(Model model, @ModelAttribute DateForm dateForm) {
 
-		model.addAttribute("dateCalc", dateCalc);
+		model.addAttribute("dateCalc", dateForm);
 
 		/* plusyear,plusmonth,plusdateの初期値 */
 		model.addAttribute("plusyear", "0");
@@ -76,7 +77,7 @@ public class DateController {
 	}
 
 	@PostMapping("/new")
-	public String create(Model model, @Validated @ModelAttribute DateCalc dateCalc, BindingResult result) {
+	public String create(Model model, @Validated @ModelAttribute DateForm dateForm, BindingResult result) {
 
 		if (result.hasErrors()) {
 
@@ -86,7 +87,7 @@ public class DateController {
 			model.addAttribute("plusday", "0");
 			return "date/new";
 		}
-		dateService.insertOne(dateCalc);
+		dateService.insertOne(dateForm);
 		return "redirect:/datecalc/index";
 	}
 
@@ -96,7 +97,7 @@ public class DateController {
 		Optional<DateCalc> date = dateService.findById(id);
 		if (date.isPresent()) {
 			DateCalc dateCalc = date.get();
-			model.addAttribute("dateCalc", dateCalc);
+			model.addAttribute("dateForm", dateCalc);
 			return "date/edit";
 		} else {
 			return "error";
@@ -104,15 +105,15 @@ public class DateController {
 	}
 
 	@PostMapping("/edit/id={id}")
-	public String update(Model model, @PathVariable("id") int id, @Validated @ModelAttribute DateCalc dateCalc,
+	public String update(Model model, @PathVariable("id") int id, @Validated @ModelAttribute DateForm dateForm,
 			BindingResult result) {
 		if (result.hasErrors()) {
 			return "date/edit";
 		}
 		Optional<DateCalc> date = dateService.findById(id);
 		if (date.isPresent()) {
-			dateService.updateOne(id, dateCalc.getDateid(), dateCalc.getName(), dateCalc.getPlusyear(),
-					dateCalc.getPlusmonth(), dateCalc.getPlusday());
+			dateService.updateOne(id, dateForm.getDateid(), dateForm.getName(), dateForm.getPlusyear(),
+					dateForm.getPlusmonth(), dateForm.getPlusday());
 			return "redirect:/datecalc/index";
 		} else {
 			model.addAttribute("message", "idが不正です");

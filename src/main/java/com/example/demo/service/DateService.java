@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import com.example.demo.entity.DateCalc;
+import com.example.demo.form.DateForm;
 import com.example.demo.repository.DateMapper;
 
 @Service
@@ -31,8 +32,8 @@ public class DateService {
 	}
 
 	// 新規登録
-	public void insertOne(@Validated DateCalc dateCalc) {
-		dateMapper.insertOne(dateCalc);
+	public void insertOne(@Validated DateForm dateForm) {
+		dateMapper.insertOne(dateForm);
 	}
 
 	// 更新
