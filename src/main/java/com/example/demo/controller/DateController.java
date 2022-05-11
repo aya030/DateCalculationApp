@@ -110,10 +110,15 @@ public class DateController {
 		if (result.hasErrors()) {
 			return "date/edit";
 		}
-
-		dateService.updateOne(id, dateCalc.getDateid(), dateCalc.getName(), dateCalc.getPlusyear(),
-				dateCalc.getPlusmonth(), dateCalc.getPlusday());
-		return "redirect:/datecalc/index";
+		Optional<DateCalc> date = dateService.findById(id);
+		if (date.isPresent()) {
+			dateService.updateOne(id, dateCalc.getDateid(), dateCalc.getName(), dateCalc.getPlusyear(),
+					dateCalc.getPlusmonth(), dateCalc.getPlusday());
+			return "redirect:/datecalc/index";
+		} else {
+			model.addAttribute("message", "idが不正です");
+			return "error/404";
+		}
 	}
 
 	/* 削除 */

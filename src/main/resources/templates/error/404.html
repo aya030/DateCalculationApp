@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="${title}">title</title>
+	<link href="/css/style.css" rel="stylesheet">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<main class="l-main">
+		<h1>404ページ</h1>
+		<p th:text="${message}">エラーメッセージ</p>
+
+		<a href="/datecalc/index" class="c-button__back">一覧画面に戻る</a>
+	</main>
+</body>
+
+</html>
