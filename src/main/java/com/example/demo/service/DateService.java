@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -47,15 +48,14 @@ public class DateService {
 
 	// 計算
 	public List<LocalDate> calculationDate(String inputDate) {
-		List<LocalDate> dateCalcResultList = new ArrayList<LocalDate>();
 		LocalDate selectedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		List<DateCalc> dateCalcs = dateMapper.findAll();
 
-		for (DateCalc date : dateCalcs) {
-			LocalDate calculationDate = selectedDate.plusYears(date.getPlusyear()).plusMonths(date.getPlusmonth())
-					.plusDays(date.getPlusday());
-			dateCalcResultList.add(calculationDate);
-		}
+		List<LocalDate> dateCalcResultList = dateCalcs.stream()
+		        .map(date -> selectedDate.plusYears(date.getPlusyear()).plusMonths(date.getPlusmonth())
+						.plusDays(date.getPlusday()))
+		        .collect(Collectors.toList());
+		
 		return dateCalcResultList;
 	}
 
