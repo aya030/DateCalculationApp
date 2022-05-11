@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -132,6 +133,15 @@ public class DateController {
 	 * 例外処理
 	 */
 
+	/* 日付が入力されなかった時 */
+	@ExceptionHandler(DateTimeParseException.class)
+	public String DateTimeParseExceptionHandler(Model model) {
+		// status -> 500エラー
+		// error -> DateTimeParseException
+		model.addAttribute("errormessage", "* 日付を入力してください");
+		return "index";
+	}
+
 	/* 変更・削除ボタンのIDがない時 */
 	@ExceptionHandler(NumberFormatException.class)
 	public String NumberFormatExceptionHandler(Model model) {
@@ -139,5 +149,4 @@ public class DateController {
 		// error -> NumberFormatException
 		return "redirect:/datecalc/index";
 	}
-
 }

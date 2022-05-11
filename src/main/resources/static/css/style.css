@@ -61,9 +61,19 @@ table th {
 /*---------------------------------
   p-index(index.html)
 ---------------------------------*/
+.p-index__form {
+	position: relative;
+}
+.p-index__form span {
+	position: absolute;
+	bottom: 15px;
+	left: 0;
+	color:red;
+	font-size: 14px;
+}
 .p-index__caption {
 	padding: 0 5px;
-	margin-bottom: 5px;
+	margin-bottom: 10px;
     border-left: 4px solid #34675c;
 }
 .p-index-text {
