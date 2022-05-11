@@ -37,8 +37,7 @@ public class DateController {
 	@GetMapping("/index")
 	public String index(Model model) {
 
-		List<DateCalc> dateList = dateService.getDateList();
-		model.addAttribute("dateList", dateList);
+		model.addAttribute("dateList", dateService.getDateList());
 
 		return "index";
 	}
@@ -46,8 +45,7 @@ public class DateController {
 	/* 計算 */
 	@GetMapping("/calc")
 	public String calc(Model model, @RequestParam("dateinput") String inputDate) {
-		List<DateCalc> dateList = dateService.getDateList();
-		model.addAttribute("dateList", dateList);
+		model.addAttribute("dateList", dateService.getDateList());
 
 		String selectedDate = inputDate.replace('-', '/');
 		model.addAttribute("dateinput", selectedDate);
@@ -95,9 +93,9 @@ public class DateController {
 	/* 更新 */
 	@GetMapping("/edit/id={id}")
 	public String edit(@PathVariable("id") int id, Model model) {
-		Optional<DateCalc> dateCalcSearch = dateService.findById(id);
-		if (dateCalcSearch.isPresent()) {
-			DateCalc dateCalc = dateCalcSearch.get();
+		Optional<DateCalc> date = dateService.findById(id);
+		if (date.isPresent()) {
+			DateCalc dateCalc = date.get();
 			model.addAttribute("dateCalc", dateCalc);
 			return "date/edit";
 		} else {
