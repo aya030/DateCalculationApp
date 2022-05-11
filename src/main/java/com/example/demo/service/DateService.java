@@ -51,11 +51,9 @@ public class DateService {
 		LocalDate selectedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		List<DateCalc> dateCalcs = dateMapper.findAll();
 
-		List<LocalDate> dateCalcResultList = dateCalcs.stream()
-		        .map(date -> selectedDate.plusYears(date.getPlusyear()).plusMonths(date.getPlusmonth())
-						.plusDays(date.getPlusday()))
-		        .collect(Collectors.toList());
-		
+		List<LocalDate> dateCalcResultList = dateCalcs.stream().map(date -> selectedDate.plusYears(date.getPlusyear())
+				.plusMonths(date.getPlusmonth()).plusDays(date.getPlusday())).collect(Collectors.toList());
+
 		return dateCalcResultList;
 	}
 
