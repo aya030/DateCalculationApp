@@ -46,10 +46,9 @@ public class DateController {
 	/* 計算 */
 	@GetMapping("/calc")
 	public String calc(Model model, @RequestParam("dateinput") String inputDate) {
-		model.addAttribute("dateList", dateService.getDateList());
 
-		String selectedDate = inputDate.replace('-', '/');
-		model.addAttribute("dateinput", selectedDate);
+		model.addAttribute("dateList", dateService.getDateList());
+		model.addAttribute("selectedDate", inputDate.replace('-', '/'));
 
 		List<LocalDate> dateCalcResultList = dateService.calculationDate(inputDate);
 		List<String> dateCalcResultStrList = new ArrayList<String>();
@@ -94,6 +93,7 @@ public class DateController {
 	/* 更新 */
 	@GetMapping("/edit/id={id}")
 	public String edit(@PathVariable("id") int id, Model model) {
+
 		Optional<DateCalc> date = dateService.findById(id);
 		if (date.isPresent()) {
 			DateCalc dateCalc = date.get();
@@ -107,6 +107,7 @@ public class DateController {
 	@PostMapping("/edit/id={id}")
 	public String update(Model model, @PathVariable("id") int id, @Validated @ModelAttribute DateForm dateForm,
 			BindingResult result) {
+
 		if (result.hasErrors()) {
 			return "date/edit";
 		}
@@ -124,6 +125,7 @@ public class DateController {
 	/* 削除 */
 	@PostMapping("/delete/id={id}")
 	public String delete(@PathVariable("id") int id) {
+
 		dateService.deleteOne(id);
 		return "redirect:/datecalc/index";
 	}
