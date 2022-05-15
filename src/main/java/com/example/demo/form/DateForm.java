@@ -25,3 +25,4 @@ public class DateForm {
 	@NotNull(message = "1桁以上の数値を入力してください")
 	private Integer plusday;
 }
+

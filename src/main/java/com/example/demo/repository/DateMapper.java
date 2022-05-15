@@ -29,3 +29,4 @@ public interface DateMapper {
 	public Integer deleteOne(int id);
 
 }
+
