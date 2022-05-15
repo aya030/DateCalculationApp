@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,20 +45,24 @@ public class DateController {
 	/* 計算 */
 	@GetMapping("/calc")
 	public String calc(Model model, @RequestParam("dateinput") String inputDate) {
+		if (inputDate == "") {
+			model.addAttribute("errormessage", "* 日付を入力してください");
+			return "index";
+		} else {
+			model.addAttribute("dateList", dateService.getDateList());
+			model.addAttribute("selectedDate", inputDate.replace('-', '/'));
 
-		model.addAttribute("dateList", dateService.getDateList());
-		model.addAttribute("selectedDate", inputDate.replace('-', '/'));
+			List<LocalDate> dateCalcResultList = dateService.calculationDate(inputDate);
+			List<String> dateCalcResultStrList = new ArrayList<String>();
+			for (LocalDate dateCalcResult : dateCalcResultList) {
+				/* localData型をString型に変換 */
+				String stringDate = dateCalcResult.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+				dateCalcResultStrList.add(stringDate);
+			}
+			model.addAttribute("stringDate", dateCalcResultStrList);
 
-		List<LocalDate> dateCalcResultList = dateService.calculationDate(inputDate);
-		List<String> dateCalcResultStrList = new ArrayList<String>();
-		for (LocalDate dateCalcResult : dateCalcResultList) {
-			/* localData型をString型に変換 */
-			String stringDate = dateCalcResult.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-			dateCalcResultStrList.add(stringDate);
+			return "index";
 		}
-		model.addAttribute("stringDate", dateCalcResultStrList);
-
-		return "index";
 	}
 
 	/* 新規登録 */
@@ -133,15 +136,6 @@ public class DateController {
 	/*
 	 * 例外処理
 	 */
-
-	/* 日付が入力されなかった時 */
-	@ExceptionHandler(DateTimeParseException.class)
-	public String DateTimeParseExceptionHandler(Model model) {
-		// status -> 500エラー
-		// error -> DateTimeParseException
-		model.addAttribute("errormessage", "* 日付を入力してください");
-		return "index";
-	}
 
 	/* 変更・削除ボタンのIDがない時 */
 	@ExceptionHandler(NumberFormatException.class)
