@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="${title}">title</title>
+	<link href="/css/style.css" rel="stylesheet">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<main class="l-main">
+		<h1>500ページ</h1>
+
+		<p class="p-index__caption" th:text="${message}">日付を入力してください</p>
+		<form class="p-index__form" th:action="@{/datecalc/calc}" method="GET">
+			<input class="c-input__date" type="date" id="inputDate" name="dateinput"></input>
+			<input class="c-input__button-execution" type="submit" value="計算実行" />
+			<span th:text="${errormessage}">エラーメッセージ</span>
+		</form>
+
+		<a href="/datecalc/index" class="c-button__back">一覧画面に戻る</a>
+	</main>
+</body>
+
+</html>

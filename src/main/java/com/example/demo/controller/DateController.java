@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,25 +46,20 @@ public class DateController {
 
 	/* 計算 */
 	@GetMapping("/calc")
-	public String calc(Model model, @RequestParam("dateinput") String inputDate) {
-		if (inputDate == "") {
-			model.addAttribute("errormessage", "* 日付を入力してください");
-			return "index";
-		} else {
-			model.addAttribute("dateList", dateService.getDateList());
-			model.addAttribute("selectedDate", inputDate.replace('-', '/'));
+	public String calc(Model model, @Validated @NotBlank @RequestParam("dateinput") String inputDate) {
+		model.addAttribute("dateList", dateService.getDateList());
+		model.addAttribute("selectedDate", inputDate.replace('-', '/'));
 
-			List<LocalDate> dateCalcResultList = dateService.calculationDate(inputDate);
-			List<String> dateCalcResultStrList = new ArrayList<String>();
-			for (LocalDate dateCalcResult : dateCalcResultList) {
-				/* localData型をString型に変換 */
-				String stringDate = dateCalcResult.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-				dateCalcResultStrList.add(stringDate);
-			}
-			model.addAttribute("stringDate", dateCalcResultStrList);
-
-			return "index";
+		List<LocalDate> dateCalcResultList = dateService.calculationDate(inputDate);
+		List<String> dateCalcResultStrList = new ArrayList<String>();
+		for (LocalDate dateCalcResult : dateCalcResultList) {
+			/* localData型をString型に変換 */
+			String stringDate = dateCalcResult.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+			dateCalcResultStrList.add(stringDate);
 		}
+		model.addAttribute("stringDate", dateCalcResultStrList);
+
+		return "index";
 	}
 
 	/* 新規登録 */
