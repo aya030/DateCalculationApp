@@ -9,7 +9,7 @@ import lombok.Data;
 public class DateForm {
 
 	private Integer id;
-	
+
 	@NotBlank(message = "日付IDを入力してください")
 	private String dateid;
 

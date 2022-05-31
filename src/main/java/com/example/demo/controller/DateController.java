@@ -33,7 +33,7 @@ public class DateController {
 	public DateController(DateService dateService) {
 		this.dateService = dateService;
 	}
-	
+
 	@ModelAttribute
 	RequestForm setupForm() {
 		return new RequestForm();
@@ -50,17 +50,17 @@ public class DateController {
 
 	/* 計算 */
 	@GetMapping("/calc")
-	public String calc(@RequestParam("inputDate") String inputDate, Model model, @Validated @ModelAttribute RequestForm requestForm,
-			BindingResult result) {
+	public String calc(@RequestParam("inputDate") String inputDate, Model model,
+			@Validated @ModelAttribute RequestForm requestForm, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "index";
-			
+
 		} else {
-			
+
 			model.addAttribute("dateList", dateService.getDateList());
 			model.addAttribute("selectedDate", inputDate.replaceAll("-", "/"));
-			
+
 			List<LocalDate> dateCalcResultList = dateService.calculationDate(requestForm);
 			List<String> dateCalcResultStrList = new ArrayList<String>();
 			for (LocalDate dateCalcResult : dateCalcResultList) {
@@ -152,3 +152,4 @@ public class DateController {
 		return "redirect:/datecalc/index";
 	}
 }
+
