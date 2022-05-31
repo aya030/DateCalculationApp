@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 
 import com.example.demo.entity.DateCalc;
 import com.example.demo.form.DateForm;
+import com.example.demo.form.RequestForm;
 import com.example.demo.repository.DateMapper;
 
 @Service
@@ -47,7 +48,9 @@ public class DateService {
 	}
 
 	// 計算
-	public List<LocalDate> calculationDate(String inputDate) {
+	public List<LocalDate> calculationDate(RequestForm requestForm) {
+
+	    String inputDate = requestForm.inputDate;
 		LocalDate selectedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		List<DateCalc> dateCalcs = dateMapper.findAll();
 

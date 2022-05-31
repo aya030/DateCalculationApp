@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.constraints.NotBlank;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.DateCalc;
 import com.example.demo.form.DateForm;
+import com.example.demo.form.RequestForm;
 import com.example.demo.service.DateService;
 
 @Controller
@@ -33,6 +32,11 @@ public class DateController {
 
 	public DateController(DateService dateService) {
 		this.dateService = dateService;
+	}
+	
+	@ModelAttribute
+	RequestForm setupForm() {
+		return new RequestForm();
 	}
 
 	/* Top */
@@ -46,27 +50,33 @@ public class DateController {
 
 	/* 計算 */
 	@GetMapping("/calc")
-	public String calc(Model model, @Validated @NotBlank @RequestParam("dateinput") String inputDate) {
-		model.addAttribute("dateList", dateService.getDateList());
-		model.addAttribute("selectedDate", inputDate.replace('-', '/'));
+	public String calc(@RequestParam("inputDate") String inputDate, Model model, @Validated @ModelAttribute RequestForm requestForm,
+			BindingResult result) {
 
-		List<LocalDate> dateCalcResultList = dateService.calculationDate(inputDate);
-		List<String> dateCalcResultStrList = new ArrayList<String>();
-		for (LocalDate dateCalcResult : dateCalcResultList) {
-			/* localData型をString型に変換 */
-			String stringDate = dateCalcResult.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-			dateCalcResultStrList.add(stringDate);
+		if (result.hasErrors()) {
+			return "index";
+			
+		} else {
+			
+			model.addAttribute("dateList", dateService.getDateList());
+			model.addAttribute("selectedDate", inputDate.replaceAll("-", "/"));
+			
+			List<LocalDate> dateCalcResultList = dateService.calculationDate(requestForm);
+			List<String> dateCalcResultStrList = new ArrayList<String>();
+			for (LocalDate dateCalcResult : dateCalcResultList) {
+				/* localData型をString型に変換 */
+				String stringDate = dateCalcResult.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+				dateCalcResultStrList.add(stringDate);
+			}
+			model.addAttribute("stringDate", dateCalcResultStrList);
+			return "index";
 		}
-		model.addAttribute("stringDate", dateCalcResultStrList);
 
-		return "index";
 	}
 
 	/* 新規登録 */
 	@GetMapping("/new")
 	public String newDate(Model model, @ModelAttribute DateForm dateForm) {
-
-		model.addAttribute("dateCalc", dateForm);
 
 		/* plusyear,plusmonth,plusdateの初期値 */
 		model.addAttribute("plusyear", "0");
@@ -142,4 +152,3 @@ public class DateController {
 		return "redirect:/datecalc/index";
 	}
 }
-
