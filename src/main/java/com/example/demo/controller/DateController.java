@@ -34,11 +34,6 @@ public class DateController {
 		this.dateService = dateService;
 	}
 
-	@ModelAttribute
-	RequestForm setupForm() {
-		return new RequestForm();
-	}
-
 	/* Top */
 	@GetMapping("/index")
 	public String index(Model model) {
@@ -51,7 +46,7 @@ public class DateController {
 	/* 計算 */
 	@GetMapping("/calc")
 	public String calc(@RequestParam("inputDate") String inputDate, Model model,
-			@Validated @ModelAttribute RequestForm requestForm, BindingResult result) {
+			@Validated @ModelAttribute("requestForm") RequestForm requestForm, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "index";
