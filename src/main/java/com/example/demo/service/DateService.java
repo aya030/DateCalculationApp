@@ -50,7 +50,7 @@ public class DateService {
 	// 計算
 	public List<LocalDate> calculationDate(RequestForm requestForm) {
 
-		String inputDate = requestForm.getInputDate();
+		String inputDate = requestForm.inputDate;
 		LocalDate selectedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		List<DateCalc> dateCalcs = dateMapper.findAll();
 

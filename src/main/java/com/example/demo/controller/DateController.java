@@ -34,6 +34,11 @@ public class DateController {
 		this.dateService = dateService;
 	}
 
+	@ModelAttribute
+	RequestForm requestForm() {
+		return new RequestForm();
+	}
+
 	/* Top */
 	@GetMapping("/index")
 	public String index(Model model) {
