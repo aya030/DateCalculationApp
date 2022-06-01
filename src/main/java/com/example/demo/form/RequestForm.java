@@ -8,6 +8,6 @@ import lombok.Data;
 public class RequestForm {
 
 	@NotBlank(message = "日付を入力してください")
-	public String inputDate;
+	private String inputDate;
 }
 

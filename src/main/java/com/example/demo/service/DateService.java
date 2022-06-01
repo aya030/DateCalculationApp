@@ -50,12 +50,13 @@ public class DateService {
 	// 計算
 	public List<LocalDate> calculationDate(RequestForm requestForm) {
 
-		String inputDate = requestForm.inputDate;
+		String inputDate = requestForm.getInputDate();
 		LocalDate selectedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		List<DateCalc> dateCalcs = dateMapper.findAll();
 
 		List<LocalDate> dateCalcResultList = dateCalcs.stream().map(date -> selectedDate.plusYears(date.getPlusyear())
-				.plusMonths(date.getPlusmonth()).plusDays(date.getPlusday())).collect(Collectors.toList());
+				                                                                        .plusMonths(date.getPlusmonth())
+				                                                                        .plusDays(date.getPlusday())).collect(Collectors.toList());
 
 		return dateCalcResultList;
 	}
