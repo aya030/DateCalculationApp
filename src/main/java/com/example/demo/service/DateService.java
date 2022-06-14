@@ -2,13 +2,16 @@ package com.example.demo.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import com.example.demo.entity.DateCalc;
+import com.example.demo.form.DateForm;
+import com.example.demo.form.RequestForm;
 import com.example.demo.repository.DateMapper;
 
 @Service
@@ -18,22 +21,20 @@ public class DateService {
 	public DateService(DateMapper dateMapper) {
 		this.dateMapper = dateMapper;
 	}
-	
+
 	// 全件取得
 	public List<DateCalc> getDateList() {
 		return dateMapper.findAll();
 	}
-	
-	//1件取得
-	public DateCalc findById(Integer id) {
-		DateCalc dateCalc = new DateCalc();
-		dateCalc.setId(id);
-		return dateMapper.findById(dateCalc);
+
+	// 1件取得
+	public Optional<DateCalc> findById(int id) {
+		return dateMapper.findById(id);
 	}
-	
+
 	// 新規登録
-	public void insertOne(@Validated DateCalc dateCalc) {
-		dateMapper.insertOne(dateCalc);
+	public void insertOne(@Validated DateForm dateForm) {
+		dateMapper.insertOne(dateForm);
 	}
 
 	// 更新
@@ -45,20 +46,20 @@ public class DateService {
 	public void deleteOne(int id) {
 		dateMapper.deleteOne(id);
 	}
-	
+
 	// 計算
-	public List<String> dataCalc(String inputDate) {
-		List<String> dateCalcResultList = new ArrayList<String>();
-		String stringDate = "yyyy/MM/dd";
-		LocalDate localDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	public List<LocalDate> calculationDate(RequestForm requestForm) {
+
+		String inputDate = requestForm.getInputDate();
+		LocalDate selectedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		List<DateCalc> dateCalcs = dateMapper.findAll();
-		
-		for (DateCalc date : dateCalcs) {
-		LocalDate dateCalc = localDate.plusYears(date.getPlusyear()).plusMonths(date.getPlusmonth()).plusDays(date.getPlusday());
-		stringDate = dateCalc.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-		dateCalcResultList.add(stringDate);
-		}
+
+		List<LocalDate> dateCalcResultList = dateCalcs.stream().map(date -> selectedDate.plusYears(date.getPlusyear())
+				                                                                        .plusMonths(date.getPlusmonth())
+				                                                                        .plusDays(date.getPlusday())).collect(Collectors.toList());
+
 		return dateCalcResultList;
 	}
 
 }
+

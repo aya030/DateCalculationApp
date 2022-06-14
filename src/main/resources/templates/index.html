@@ -12,14 +12,15 @@
 		<h1>日付計算APP</h1>
 
 		<p class="p-index__caption">日付を入力してください</p>
-		<form th:action="@{/datecalc/calc}" method="GET">
-			<input class="c-input__date" type="date" id="inputDate" name="dateinput"></input>
+		<form class="p-index__form" th:action="@{/datecalc/calc}" method="GET" th:object="${requestForm}">
+			<input class="c-input__date" type="date" id="inputDate" th:field="*{inputDate}"></input>
 			<input class="c-input__button-execution" type="submit" value="計算実行" />
+			<span th:errors="*{inputDate}">エラーメッセージ</span>
 		</form>
 
 		<div class="p-index-text">
 			<p>入力した値：</p>
-			<p th:text="${dateinput}">2022/02/02</p>
+			<p th:text="${selectedDate}">2022-02-02</p>
 		</div>
 
 		<a href="/datecalc/new" class="c-button__new">新規登録</a>
@@ -52,7 +53,7 @@
 						</td>
 					</tr>
 				</table>
-				
+
 				<table>
 					<tr>
 						<th>計算結果</th>
@@ -67,3 +68,4 @@
 </body>
 
 </html>
+

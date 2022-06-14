@@ -2,16 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>error</title>
+	<title th:text="${title}">title</title>
 	<link href="/css/style.css" rel="stylesheet">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
 	<main class="l-main">
-		<!-- エラー内容を表示 -->
-		<h1 th:text="${status} + ' ' + ${error}"></h1>
-		<p th:text="${message}"></p>
+		<h1>404ページ</h1>
+		<p th:text="${message}">エラーメッセージ</p>
+
 		<a href="/datecalc/index" class="c-button__back">一覧画面に戻る</a>
 	</main>
 </body>

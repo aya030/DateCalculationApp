@@ -11,7 +11,8 @@
 	<main class="l-main">
 		<h1>登録変更</h1>
 
-		<form class="p-edit__form" th:method="post" th:object=${dateCalc} th:action="@{/datecalc/edit/id={id}(id=*{id})}">
+		<form class="p-edit__form" th:method="post" th:object=${dateForm}
+			th:action="@{/datecalc/edit/id={id}(id=*{id})}">
 			<div class="p-edit__input-wrapper">
 				<label class="c-input__label" for="dateid">日付ID</label>
 				<input class="c-input__text" id="dateid" type="text" th:field="*{dateid}">
@@ -45,3 +46,4 @@
 </body>
 
 </html>
+

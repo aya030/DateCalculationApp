@@ -1,6 +1,10 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.DateCalc;
+import com.example.demo.form.DateForm;
+import com.example.demo.form.RequestForm;
 import com.example.demo.service.DateService;
 
 @Controller
@@ -28,36 +34,48 @@ public class DateController {
 		this.dateService = dateService;
 	}
 
+	@ModelAttribute
+	RequestForm requestForm() {
+		return new RequestForm();
+	}
+
 	/* Top */
 	@GetMapping("/index")
 	public String index(Model model) {
 
-		List<DateCalc> dateList = dateService.getDateList();
-		model.addAttribute("dateList", dateList);
+		model.addAttribute("dateList", dateService.getDateList());
 
 		return "index";
 	}
 
 	/* 計算 */
 	@GetMapping("/calc")
-	public String calc(Model model, @RequestParam("dateinput") String inputDate) {
-		List<DateCalc> dateList = dateService.getDateList();
-		model.addAttribute("dateList", dateList);
+	public String calc(@RequestParam("inputDate") String inputDate, Model model,
+			@Validated @ModelAttribute("requestForm") RequestForm requestForm, BindingResult result) {
 
-		String standardDate = inputDate.replace('-', '/');
-		model.addAttribute("dateinput", standardDate);
+		if (result.hasErrors()) {
+			return "index";
 
-		List<String> stringDate = dateService.dataCalc(inputDate);
-		model.addAttribute("stringDate", stringDate);
+		} else {
 
-		return "index";
+			model.addAttribute("dateList", dateService.getDateList());
+			model.addAttribute("selectedDate", inputDate.replaceAll("-", "/"));
+
+			List<LocalDate> dateCalcResultList = dateService.calculationDate(requestForm);
+
+			List<String> dateCalcResultStrList = dateCalcResultList.stream()
+					.map(dateCalcResult -> dateCalcResult.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")))
+					.collect(Collectors.toList());
+
+			model.addAttribute("stringDate", dateCalcResultStrList);
+			return "index";
+		}
+
 	}
 
 	/* 新規登録 */
 	@GetMapping("/new")
-	public String newDate(Model model, @ModelAttribute DateCalc dateCalc) {
-
-		model.addAttribute("dateCalc", dateCalc);
+	public String newDate(Model model, @ModelAttribute DateForm dateForm) {
 
 		/* plusyear,plusmonth,plusdateの初期値 */
 		model.addAttribute("plusyear", "0");
@@ -67,8 +85,8 @@ public class DateController {
 	}
 
 	@PostMapping("/new")
-	public String create(Model model, @Validated @ModelAttribute DateCalc dateCalc, BindingResult result) {
-		
+	public String create(Model model, @Validated @ModelAttribute DateForm dateForm, BindingResult result) {
+
 		if (result.hasErrors()) {
 
 			/* plusyear,plusmonth,plusdateの初期値 */
@@ -77,7 +95,7 @@ public class DateController {
 			model.addAttribute("plusday", "0");
 			return "date/new";
 		}
-		dateService.insertOne(dateCalc);
+		dateService.insertOne(dateForm);
 		return "redirect:/datecalc/index";
 	}
 
@@ -85,24 +103,38 @@ public class DateController {
 	@GetMapping("/edit/id={id}")
 	public String edit(@PathVariable("id") int id, Model model) {
 
-		model.addAttribute("dateCalc", dateService.findById(id));
-		return "date/edit";
+		Optional<DateCalc> date = dateService.findById(id);
+		if (date.isPresent()) {
+			DateCalc dateCalc = date.get();
+			model.addAttribute("dateForm", dateCalc);
+			return "date/edit";
+		} else {
+			return "error";
+		}
 	}
 
 	@PostMapping("/edit/id={id}")
-	public String update(Model model, @Validated @ModelAttribute DateCalc dateCalc, BindingResult result) {
+	public String update(Model model, @PathVariable("id") int id, @Validated @ModelAttribute DateForm dateForm,
+			BindingResult result) {
+
 		if (result.hasErrors()) {
 			return "date/edit";
 		}
-
-		dateService.updateOne(dateCalc.getId(), dateCalc.getDateid(), dateCalc.getName(), dateCalc.getPlusyear(),
-				dateCalc.getPlusmonth(), dateCalc.getPlusday());
-		return "redirect:/datecalc/index";
+		Optional<DateCalc> date = dateService.findById(id);
+		if (date.isPresent()) {
+			dateService.updateOne(id, dateForm.getDateid(), dateForm.getName(), dateForm.getPlusyear(),
+					dateForm.getPlusmonth(), dateForm.getPlusday());
+			return "redirect:/datecalc/index";
+		} else {
+			model.addAttribute("message", "idが不正です");
+			return "error/404";
+		}
 	}
 
 	/* 削除 */
 	@PostMapping("/delete/id={id}")
 	public String delete(@PathVariable("id") int id) {
+
 		dateService.deleteOne(id);
 		return "redirect:/datecalc/index";
 	}
@@ -114,11 +146,9 @@ public class DateController {
 	/* 変更・削除ボタンのIDがない時 */
 	@ExceptionHandler(NumberFormatException.class)
 	public String NumberFormatExceptionHandler(Model model) {
-		model.addAttribute("status", "400エラー");
-		model.addAttribute("error", "NumberFormatException");
-		model.addAttribute("message", "IDが不正です");
-
-		return "error";
+		// status -> 400エラー
+		// error -> NumberFormatException
+		return "redirect:/datecalc/index";
 	}
-
 }
+
